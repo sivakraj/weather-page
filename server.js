@@ -1,5 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
-projectData = {};
+let projectData = {};
 
 // Require Express to run server and routes
 const express = require('express');
@@ -50,13 +50,11 @@ app.post('/addWeatherData', addWeatherData);
  */
 function addWeatherData(request, response) {
 
-    newData = {
+    projectData = {
         temperature: request.body.temperature,
         date: request.body.date,
         userData: request.body.userData
     };
 
-    projectData.weather = newData;
-
-    response.send(newData);
+    response.send(projectData);
 }

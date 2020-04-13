@@ -2,15 +2,13 @@
 
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth()+'.'+ d.getDate()+'.'+ d.getFullYear();
-
-// Personal API Key for OpenWeatherMap API
-const OPEN_WEATHER_API_KEY = 'b9b497f66799fa7ee3cdd5770a142f0c';
+//+1 added to getMonth() to get correct month
+let newDate = `${d.getMonth() + 1}.${d.getDate()}.${d.getFullYear()}`;
 
 const BASE_WEATHER_URL = 'https://api.openweathermap.org/data/2.5/weather?zip=';
 
-//Authorization to append API Key
-const AUTH = '&appid=';
+//Authorization to append API Key to the URL
+const AUTH = '&appid=b9b497f66799fa7ee3cdd5770a142f0c';
 
 //Part of data used to convert the temperature from Kelvin to F
 const KELVIN_CONV_VALUE = 459.67;
@@ -30,15 +28,14 @@ function generateWeather(event) {
     const zip = document.getElementById('zip').value;
     const feelings = document.getElementById('feelings').value;
 
-    //Bail out early if zip code is not entered or it's not a number
-    //Chosen global isNaN() rather than Number.isNaN() intentionally
-    if(isNaN(zip)) {
+    //Bail out early if zip code is not entered
+    if(!zip) {
         alert('Enter a zip code to continue');
         return;
     }
 
     //Call GET Web API
-    getData(`${BASE_WEATHER_URL}${zip}${AUTH}${OPEN_WEATHER_API_KEY}`)
+    getData(`${BASE_WEATHER_URL}${zip}${AUTH}`)
     .then((data) => {
         if(data.cod == 200) { //for success response
             postData('/addWeatherData', {temperature: getTempInF(data.main.temp), date: newDate, userData: feelings});
@@ -97,9 +94,9 @@ const updateUI = async () => {
 
     try {
         const projectData = await request.json();
-        document.getElementById('temp').innerHTML = projectData.weather.temperature;
-        document.getElementById('date').innerHTML = projectData.weather.date;
-        document.getElementById('content').innerHTML = projectData.weather.userData;
+        document.getElementById('temp').innerHTML = projectData.temperature;
+        document.getElementById('date').innerHTML = projectData.date;
+        document.getElementById('content').innerHTML = projectData.userData;
     } catch (error) {
         console.log('Error in updating UI: ', error);
     }
