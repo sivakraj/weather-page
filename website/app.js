@@ -8,7 +8,7 @@ let newDate = `${d.getMonth() + 1}.${d.getDate()}.${d.getFullYear()}`;
 const BASE_WEATHER_URL = 'https://api.openweathermap.org/data/2.5/weather?zip=';
 
 //Authorization to append API Key to the URL
-const AUTH = '&appid=b9b497f66799fa7ee3cdd5770a142f0c';
+const AUTH = '&appid=<api-key>';
 
 //Part of data used to convert the temperature from Kelvin to F
 const KELVIN_CONV_VALUE = 459.67;
